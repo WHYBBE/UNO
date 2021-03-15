@@ -20,7 +20,11 @@ target_compile_definitions(asio INTERFACE
 
 if(UNIX)
     target_link_libraries(asio INTERFACE pthread)
+elseif(WIN32 AND MINGW)
+    message("in mingw")
+    target_link_libraries(asio INTERFACE ws2_32 wsock32)
 elseif(WIN32)
+    message("in win32")
     # macro see @ https://stackoverflow.com/a/40217291/1746503
     macro(get_WIN32_WINNT version)
         if (CMAKE_SYSTEM_VERSION)
