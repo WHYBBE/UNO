@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set(CMAKE_BUILD_TYPE Debug)
 
 option(BUILD_TEST "build tests" OFF)
-option(ENABLE_LOG "enable spdlog" OFF)
+option(ENABLE_LOG "enable spdlog" ON)
 
 # build lib before adding ENABLE_LOG definition to avoid recompiling lib when toggling that option
 add_subdirectory(lib)

@@ -6,6 +6,11 @@
 
 #include "common.h"
 
+#ifdef ENABLE_LOG
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#endif
+
 namespace UNO { namespace Common {
 
 /**
@@ -17,6 +22,8 @@ struct GameConfigInfo {
     std::string mHost;
     std::string mPort;
     std::string mUsername;
+    // NOTE_WHY: 这种做法恰当吗？是否应该写死某些配置的参数？采用配置文件是否更好！
+    // NOTE_WHY: 简单的两次使用后，发现受限于原有的代码结构，必须调用独立指针指向地址，不是一种很优雅的调用方式
     std::string mLogPath{"logs/uno.log"};
 };
 

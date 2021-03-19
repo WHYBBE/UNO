@@ -50,6 +50,7 @@ playground.sh
 
 # VS
 .vs
+out
 
 # Clion
 .idea

@@ -59,6 +59,8 @@ const std::string Config::FILE_OPT_BLUE = "blue";
 Config::Config(int argc, const char **argv)
 {
     mOptions = std::make_unique<cxxopts::Options>("uno", "UNO - uno card game");
+    //NOTE_WHY: 如果cxxopts::value的值与前面的变量参数类型不对应会发生什么?
+    //NOTE_WHY: 然后这里add_options()()()是一种什么写法？
     mOptions->add_options()
         (CMD_OPT_BOTH_LISTEN, "the port number that server will listen on", cxxopts::value<std::string>())
         (CMD_OPT_BOTH_CONNECT, "the endpoint that client (player) will connect to", cxxopts::value<std::string>())
@@ -75,6 +77,10 @@ Config::Config(int argc, const char **argv)
     catch (std::exception &e) {
         std::cout << mOptions->help() << std::endl;
         std::cout << e.what() << std::endl;
+#ifdef ENABLE_LOG
+        spdlog::set_default_logger(spdlog::basic_logger_mt("UNO", mGameConfigInfo->mLogPath));
+        spdlog::warn("wrong argment!");
+#endif
         std::exit(-1);
     }
     std::string configFile;
@@ -101,6 +107,10 @@ std::unique_ptr<GameConfigInfo> Config::Parse()
     catch (std::exception &e) {
         std::cout << mOptions->help() << std::endl;
         std::cout << e.what() << std::endl;
+#ifdef ENABLE_LOG
+        spdlog::set_default_logger(spdlog::basic_logger_mt("UNO", mGameConfigInfo->mLogPath));
+        spdlog::warn("wrong parse argment!");
+#endif
         std::exit(-1);
     }
 
