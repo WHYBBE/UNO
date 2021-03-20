@@ -54,5 +54,4 @@ out
 
 # Clion
 .idea
-cmake-build-debug
-cmake-build-debug-visual-studio
+cmake*

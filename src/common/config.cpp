@@ -83,7 +83,8 @@ Config::Config(int argc, const char **argv)
 #endif
         std::exit(-1);
     }
-    std::string configFile;
+
+    // NOTE_WHY: 如果指定了file参数，就利用YAML-cpp读取
     if (mCmdlineOpts->count(CMD_OPT_LONG_CFGFILE)) {
         auto configFile = (*mCmdlineOpts)[CMD_OPT_LONG_CFGFILE].as<std::string>();
         auto rootNode = YAML::LoadFile(configFile);
@@ -215,7 +216,7 @@ void Config::SetUpCommonConfig()
     Common::mPlayerNum = mCommonConfigInfo->mPlayerNum.value_or(3);
     Common::mTimeoutPerTurn = 15;
     Common::mHandCardsNumPerRow = 8;
-    
+    //NOTE_WHY: 四个代码块相似存在冗余，可以考虑优化
     auto redIter = Common::mEscapeMap.find(mCommonConfigInfo->mRedEscape.value_or("red"));
     if (redIter == Common::mEscapeMap.end()) {
         Common::mRedEscape = Common::mEscapeMap.at("red");
